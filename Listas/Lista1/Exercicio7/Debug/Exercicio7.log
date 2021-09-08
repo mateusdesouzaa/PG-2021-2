@@ -1,0 +1,3 @@
+﻿  EXERC7.cpp
+C:\Projects\PG\PG-2021-2\Lista_1\HelloTriangle\Exercicio7\EXERC7.cpp(231,20): warning C4244: 'inicializando': conversão de 'double' para 'float', possível perda de dados
+  Exercicio7.vcxproj -> C:\Projects\PG\PG-2021-2\Lista_1\HelloTriangle\Debug\Exercicio7.exe

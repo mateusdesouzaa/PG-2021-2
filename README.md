@@ -1,3 +1,4 @@
-# Repositório criado para cadeira Processamento Gráfico #
+# Repositório criado para a disciplina de Processamento Gráfico #
 
+Nome: Mateus de Souza
 
