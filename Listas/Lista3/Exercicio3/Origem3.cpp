@@ -36,17 +36,14 @@ int setupGeometry();
 // Dimensões da janela (pode ser alterado em tempo de execução)
 const GLuint WIDTH = 800, HEIGHT = 600;
 
+enum Movment { Left, Right, Top, Down, Stop };
+static Movment mov = Stop;
 
 // Função MAIN
 int main()
 {
 	// Inicialização da GLFW
 	glfwInit();
-
-	int cntx = 400.0;
-	int cnty = 300.0;
-
-	unsigned char cmd;
 
 	// Criação da janela GLFW
 	GLFWwindow* window = glfwCreateWindow(WIDTH, HEIGHT, "Ola Quadradinhos", nullptr, nullptr);
@@ -97,11 +94,11 @@ int main()
 	glm::mat4 model = glm::mat4(1);
 
 	model = glm::translate(model, glm::vec3(400, 300, 0.0));
-	//model = glm::rotate(model, glm::radians(45.0f), glm::vec3(0.0f, 0.0f, 1.0f));
 	model = glm::scale(model, glm::vec3(200, 100, 1.0));
 
 	GLint modelLoc = glGetUniformLocation(shader->Program, "model");
 
+	float x = 400.0f, y = 300.0f;
 
 	// Loop da aplicação - "game loop"
 	while (!glfwWindowShouldClose(window))
@@ -121,21 +118,35 @@ int main()
 
 		model = glm::mat4(1); //matriz identidade
 
-		cmd = getchar();
-
-		switch (cmd)
+		switch (mov)
 		{
-		case 'W':
-		case 'w':	cnty += 3;	break; //soma em y
-		case 'A':
-		case 'a':	cntx -= 3;	break; //subtrai em x
-		case 'S':
-		case 's': 	cnty -= 3;	break; //subtrai em y
-		case 'D':
-		case 'd':	cntx += 3;	break; //soma em x
+		case Left:	
+			if (x >= 50) {
+				x -= 0.2f;	break;
+			}
+			else break;
+
+		case Right:	
+			if (x <= 750) {
+				x += 0.2f;	break;
+			}
+			else break;
+
+		case Top:
+			if (y <= 550) {
+				y += 0.2f;	break;
+			}
+			else break;
+
+		case Down:	
+			if (y >= 50) {
+				y -= 0.2f;	break;
+			}
+			else break;
+		default:	break;
 		}
 
-		model = glm::translate(model, glm::vec3(cntx, cnty, 0.0));
+		model = glm::translate(model, glm::vec3(x, y, 0.0f));
 		model = glm::scale(model, glm::vec3(100, 100, 1.0));
 
 		glUniformMatrix4fv(modelLoc, 1, FALSE, glm::value_ptr(model));
@@ -148,7 +159,6 @@ int main()
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(0);
-
 
 		glfwSwapBuffers(window);
 	}
@@ -168,6 +178,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 {
 	if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
 		glfwSetWindowShouldClose(window, GL_TRUE);
+
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {	mov = Right; }
+	else if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)	{ mov = Left; }
+	else if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)  { mov = Top;  }
+	else if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)  { mov = Down; }
+	else { mov = Stop; }
 }
 
 // Esta função está bastante harcoded - objetivo é criar os buffers que armazenam a 
@@ -179,10 +195,10 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 int setupGeometry()
 {
 	GLfloat vertices[] = {
-	-0.5f,  0.5f, 0.0f, //top left 
-	 0.5f,  0.5f, 0.0f, //top right
-	 0.5f, -0.5f, 0.0f, //bottom right
-	-0.5f, -0.5f, 0.0f, //bottom left
+	-0.5f,  0.5f, 0.0f, //Top Left 
+	 0.5f,  0.5f, 0.0f, //Top Right
+	 0.5f, -0.5f, 0.0f, //bottom Right
+	-0.5f, -0.5f, 0.0f, //bottom Left
 	};
 
 	GLuint indices[] = {
