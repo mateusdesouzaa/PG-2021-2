@@ -70,9 +70,6 @@
     <None Include="..\Exercicio1\shaders\1f.fs">
       <Filter>shaders</Filter>
     </None>
-    <None Include="..\Exercicio1\shaders\1g.fs">
-      <Filter>shaders</Filter>
-    </None>
     <None Include="..\Exercicio1\shaders\sprite.vs">
       <Filter>shaders</Filter>
     </None>

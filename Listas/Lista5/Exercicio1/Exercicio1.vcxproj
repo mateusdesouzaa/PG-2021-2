@@ -162,7 +162,6 @@
     <None Include="shaders\1d.fs" />
     <None Include="shaders\1e.fs" />
     <None Include="shaders\1f.fs" />
-    <None Include="shaders\1g.fs" />
     <None Include="shaders\sprite.vs" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
